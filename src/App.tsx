@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
 import { Search } from './components/Search';
 import { ResultsList } from './components/ResultsList';
 import type { Person } from './components/ResultsList';
@@ -8,6 +9,7 @@ type AppState = {
   results: Person[];
   loading: boolean;
   error: string | null;
+  throwError: boolean;
 };
 
 class App extends Component<Record<string, never>, AppState> {
@@ -16,6 +18,7 @@ class App extends Component<Record<string, never>, AppState> {
     results: [],
     loading: false,
     error: null,
+    throwError: false,
   };
 
   componentDidMount() {
@@ -51,20 +54,22 @@ class App extends Component<Record<string, never>, AppState> {
   };
 
   render() {
-    const { searchTerm, results, loading, error } = this.state;
+    const { searchTerm, results, loading, error, throwError } = this.state;
+
+    if (throwError) {
+      throw new Error('Test error');
+    }
 
     return (
-      <div>
-        <Search searchTerm={searchTerm} onSearch={this.handleSearch} />
-        <ResultsList results={results} loading={loading} error={error} />
-        <button
-          onClick={() => {
-            throw new Error('Test error');
-          }}
-        >
-          Throw Error
-        </button>
-      </div>
+      <ErrorBoundary>
+        <div>
+          <Search searchTerm={searchTerm} onSearch={this.handleSearch} />
+          <ResultsList results={results} loading={loading} error={error} />
+          <button onClick={() => this.setState({ throwError: true })}>
+            Throw Error
+          </button>
+        </div>
+      </ErrorBoundary>
     );
   }
 }
