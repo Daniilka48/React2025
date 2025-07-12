@@ -1,25 +1,72 @@
-import { useState } from 'react';
-import './App.css';
+import { Component } from 'react';
+import { Search } from './components/Search';
+import { ResultsList } from './components/ResultsList';
+import type { Person } from './components/ResultsList';
 
-function App() {
-  const [count, setCount] = useState(0);
+type AppState = {
+  searchTerm: string;
+  results: Person[];
+  loading: boolean;
+  error: string | null;
+};
 
-  return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+class App extends Component<Record<string, never>, AppState> {
+  state: AppState = {
+    searchTerm: '',
+    results: [],
+    loading: false,
+    error: null,
+  };
+
+  componentDidMount() {
+    const savedTerm = localStorage.getItem('searchTerm') || '';
+    this.setState({ searchTerm: savedTerm }, () => {
+      this.fetchData(savedTerm);
+    });
+  }
+
+  fetchData = async (term: string) => {
+    this.setState({ loading: true, error: null });
+
+    const query = term.trim() ? `?search=${term.trim()}&page=1` : '?page=1';
+
+    try {
+      const res = await fetch(`https://swapi.dev/api/people/${query}`);
+      if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
+      const data = await res.json();
+      this.setState({ results: data.results, loading: false });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        this.setState({ error: err.message, loading: false });
+      } else {
+        this.setState({ error: 'Unknown error', loading: false });
+      }
+    }
+  };
+
+  handleSearch = (term: string) => {
+    localStorage.setItem('searchTerm', term);
+    this.setState({ searchTerm: term });
+    this.fetchData(term);
+  };
+
+  render() {
+    const { searchTerm, results, loading, error } = this.state;
+
+    return (
+      <div>
+        <Search searchTerm={searchTerm} onSearch={this.handleSearch} />
+        <ResultsList results={results} loading={loading} error={error} />
+        <button
+          onClick={() => {
+            throw new Error('Test error');
+          }}
+        >
+          Throw Error
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+    );
+  }
 }
 
 export default App;
