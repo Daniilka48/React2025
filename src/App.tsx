@@ -34,7 +34,7 @@ class App extends Component<Record<string, never>, AppState> {
     const query = term.trim() ? `?search=${term.trim()}&page=1` : '?page=1';
 
     try {
-      const res = await fetch(`https://swapi.dev/api/people/${query}`);
+      const res = await fetch(`https://swapi.py4e.com/api/people/${query}`);
       if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
       const data = await res.json();
       this.setState({ results: data.results, loading: false });
