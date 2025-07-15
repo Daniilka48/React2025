@@ -1,0 +1,33 @@
+.error-boundary {
+  background-color: rgb(28, 28, 28, 0.7);
+  color: white;
+  padding: 3rem;
+  text-align: center;
+  min-height: 100vh;
+
+}
+
+.error-boundary h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.error-boundary p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.error-reset-button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.error-reset-button:hover {
+  background-color: #cc0000;
+}
