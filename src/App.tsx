@@ -3,6 +3,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Search } from './components/Search';
 import { ResultsList } from './components/ResultsList';
 import type { Person } from './components/ResultsList';
+import './cssComponents/App.css';
 
 type AppState = {
   searchTerm: string;
@@ -65,7 +66,10 @@ class App extends Component<Record<string, never>, AppState> {
         <div>
           <Search searchTerm={searchTerm} onSearch={this.handleSearch} />
           <ResultsList results={results} loading={loading} error={error} />
-          <button onClick={() => this.setState({ throwError: true })}>
+          <button
+            className="error-button"
+            onClick={() => this.setState({ throwError: true })}
+          >
             Throw Error
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../cssComponents/resultsList.css';
 
 export type Person = {
   name: string;
@@ -17,12 +18,12 @@ interface ResultsListProps {
 export class ResultsList extends React.Component<ResultsListProps> {
   render() {
     const { results, loading, error } = this.props;
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <div className="loading">Loading...</div>;
+    if (error) return <div className="error">Error: {error}</div>;
     return (
-      <ul>
+      <ul className="results-list">
         {results.map((person) => (
-          <li key={person.name}>
+          <li key={person.name} className="result-item">
             <strong>{person.name}</strong> — {person.birth_year} —{' '}
             {person.gender}
           </li>

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import type { ReactNode } from 'react';
+import '../cssComponents/ErrorBoundary.css';
 
 type ErrorBoundaryState = {
   hasError: boolean;
@@ -26,10 +27,12 @@ export class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div className="error-boundary">
           <h1>Something went wrong.</h1>
           <p>Try going back or refreshing the page.</p>
-          <button onClick={this.handleReset}>Back</button>
+          <button onClick={this.handleReset} className="error-reset-button">
+            Back
+          </button>
         </div>
       );
     }

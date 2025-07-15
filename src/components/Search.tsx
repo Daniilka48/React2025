@@ -1,4 +1,5 @@
 import React from 'react';
+import '../cssComponents/Search.css';
 
 interface SearchProps {
   searchTerm: string;
@@ -20,13 +21,17 @@ export class Search extends React.Component<SearchProps> {
 
   render() {
     return (
-      <div>
+      <div className="search-container">
         <input
           type="text"
           value={this.state.inputValue}
           onChange={this.handleInputChange}
+          className="search-input"
+          placeholder="Enter character name..."
         />
-        <button onClick={this.handleSearchClick}>Search</button>
+        <button onClick={this.handleSearchClick} className="search-button">
+          Search
+        </button>
       </div>
     );
   }
