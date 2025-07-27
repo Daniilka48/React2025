@@ -40,7 +40,7 @@ const About = () => {
       </p>
 
       <Link to="/" className="about-link-back">
-        ← Back to Search
+        Back to Search
       </Link>
     </div>
   );

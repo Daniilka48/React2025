@@ -14,17 +14,38 @@ const mockResults = [
 
 describe('ResultsList Component', () => {
   it('renders loading state', () => {
-    render(<ResultsList results={[]} loading={true} error={null} />);
+    render(
+      <ResultsList
+        results={[]}
+        loading={true}
+        error={null}
+        onItemClick={() => {}}
+      />
+    );
     expect(screen.getByText(/loading.../i)).toBeInTheDocument();
   });
 
   it('renders error state', () => {
-    render(<ResultsList results={[]} loading={false} error="Network error" />);
+    render(
+      <ResultsList
+        results={[]}
+        loading={false}
+        error="Network error"
+        onItemClick={() => {}}
+      />
+    );
     expect(screen.getByText(/error: network error/i)).toBeInTheDocument();
   });
 
   it('renders character list', () => {
-    render(<ResultsList results={mockResults} loading={false} error={null} />);
+    render(
+      <ResultsList
+        results={mockResults}
+        loading={false}
+        error={null}
+        onItemClick={() => {}}
+      />
+    );
     expect(screen.getByText(/luke skywalker/i)).toBeInTheDocument();
   });
 });
