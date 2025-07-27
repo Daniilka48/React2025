@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Search } from '../components/Search';
 import { ResultsList } from '../components/ResultsList';
-import type { Person } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../cssComponents/MainPage.css';
+import { useCharacters } from '../hooks/useCharacters';
 
 const MainPage = () => {
   const { pageNumber, detailsId } = useParams();
@@ -20,38 +20,13 @@ const MainPage = () => {
 
   const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
 
-  const [results, setResults] = useState<Person[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     if (searchTerm !== searchFromUrl) {
       setSearchTerm(searchFromUrl);
     }
   }, [searchFromUrl, searchTerm, setSearchTerm]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const query = searchTerm.trim()
-          ? `?search=${encodeURIComponent(searchTerm.trim())}&page=${currentPage}`
-          : `?page=${currentPage}`;
-        const res = await fetch(`https://swapi.py4e.com/api/people/${query}`);
-        if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
-        const data = await res.json();
-        setResults(data.results);
-      } catch (err) {
-        if (err instanceof Error) setError(err.message);
-        else setError('Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [searchTerm, currentPage]);
+  const { results, loading, error } = useCharacters(currentPage, searchTerm);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
