@@ -13,22 +13,29 @@ interface ResultsListProps {
   results: Person[];
   loading: boolean;
   error: string | null;
+  onItemClick: (index: number) => void;
 }
 
-export class ResultsList extends React.Component<ResultsListProps> {
-  render() {
-    const { results, loading, error } = this.props;
-    if (loading) return <div className="loading">Loading...</div>;
-    if (error) return <div className="error">Error: {error}</div>;
-    return (
-      <ul className="results-list">
-        {results.map((person) => (
-          <li key={person.name} className="result-item">
-            <strong>{person.name}</strong> — {person.birth_year} —{' '}
-            {person.gender}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
+export const ResultsList: React.FC<ResultsListProps> = ({
+  results,
+  loading,
+  error,
+  onItemClick,
+}) => {
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
+  return (
+    <ul className="results-list">
+      {results.map((person, index) => (
+        <li
+          key={person.name}
+          className="result-item"
+          onClick={() => onItemClick(index)}
+        >
+          <strong>{person.name}</strong> — {person.birth_year} — {person.gender}
+        </li>
+      ))}
+    </ul>
+  );
+};
