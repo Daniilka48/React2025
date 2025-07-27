@@ -4,7 +4,7 @@
   align-items: center;
   gap: 12px;
   font-family: Arial, sans-serif;
-  margin: 20px auto;
+  margin: 15px auto 0;
 }
 
 .pagination button {

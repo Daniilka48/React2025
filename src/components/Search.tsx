@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../cssComponents/Search.css';
 
 interface SearchProps {
@@ -34,9 +33,6 @@ export const Search: React.FC<SearchProps> = ({ searchTerm, onSearch }) => {
       <button onClick={handleSearchClick} className="search-button">
         Search
       </button>
-      <Link to="/about" className="about-link">
-        About
-      </Link>
     </div>
   );
 };

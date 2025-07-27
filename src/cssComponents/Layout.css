@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.layout-header {
+  background: rgb(0, 123, 255, 0.5);
+  padding: 1rem;
+  color: white;
+}
+
+.layout-header nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.layout-header a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.layout-header a:hover {
+  text-decoration: underline;
+}
+
+.layout-main {
+  flex: 1;
+  overflow-y: auto;
+}
