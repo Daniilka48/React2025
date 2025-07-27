@@ -5,6 +5,7 @@ import { ResultsList } from '../components/ResultsList';
 import type { Person } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
+import useLocalStorage from '../hooks/useLocalStorage';
 import '../cssComponents/App.css';
 
 const MainPage = () => {
@@ -16,7 +17,8 @@ const MainPage = () => {
   const searchFromUrl = queryParams.get('search') || '';
   const pageFromUrl = parseInt(queryParams.get('page') || '1', 10);
 
-  const [searchTerm, setSearchTerm] = useState(searchFromUrl);
+  const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
+
   const [results, setResults] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,8 +26,10 @@ const MainPage = () => {
   const currentPage = pageFromUrl || 1;
 
   useEffect(() => {
-    setSearchTerm(searchFromUrl);
-  }, [searchFromUrl]);
+    if (searchTerm !== searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+  }, [searchFromUrl, searchTerm, setSearchTerm]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +55,7 @@ const MainPage = () => {
   }, [searchTerm, currentPage]);
 
   const handleSearch = (term: string) => {
+    setSearchTerm(term);
     navigate(`/?search=${encodeURIComponent(term)}&page=1`);
   };
 
