@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-image: url('./public/1347937.png');
+  background-image: url('/1347937.png');
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
@@ -10,7 +10,7 @@ html, body {
 }
 
 
-.error-button {
+/* .error-button {
   margin: 2rem auto;
   display: block;
   padding: 0.75rem 1.5rem;
@@ -25,7 +25,7 @@ html, body {
 
 .error-button:hover {
   background-color: #b02a37;
-}
+} */
 
 
 .main-container {
@@ -35,25 +35,28 @@ html, body {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: #f0f2f5;
+  background-color: rgb(240, 242, 245, 0.5);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.9);
 }
 
 .left-panel {
   width: 900px;
-  background-color: white;
+  background-color: rgb(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0,0,0,0.9);
+  overflow-y: auto;
 }
 
 .right-panel {
-  flex: 1; /* занимает остаток пространства */
-  background-color: white;
+  flex: 1;
+  background-color: rgb(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   max-height: 80vh;
+  box-shadow: 0 0 10px rgba(0,0,0,0.9);
 }

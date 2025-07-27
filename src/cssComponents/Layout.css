@@ -8,6 +8,7 @@
   background: rgb(0, 123, 255, 0.5);
   padding: 1rem;
   color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.9);
 }
 
 .layout-header nav {

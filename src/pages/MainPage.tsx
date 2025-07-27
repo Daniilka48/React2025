@@ -9,21 +9,20 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import '../cssComponents/MainPage.css';
 
 const MainPage = () => {
-  const { detailsId } = useParams();
+  const { pageNumber, detailsId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const currentPage = parseInt(pageNumber || '1', 10);
+
   const queryParams = new URLSearchParams(location.search);
   const searchFromUrl = queryParams.get('search') || '';
-  const pageFromUrl = parseInt(queryParams.get('page') || '1', 10);
 
   const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
 
   const [results, setResults] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const currentPage = pageFromUrl || 1;
 
   useEffect(() => {
     if (searchTerm !== searchFromUrl) {
@@ -56,22 +55,23 @@ const MainPage = () => {
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    navigate(`/?search=${encodeURIComponent(term)}&page=1`);
+    navigate(`/page/1?search=${encodeURIComponent(term)}`);
   };
 
   const handlePageChange = (page: number) => {
     const searchParam = searchTerm
-      ? `&search=${encodeURIComponent(searchTerm)}`
+      ? `?search=${encodeURIComponent(searchTerm)}`
       : '';
-    navigate(`/?page=${page}${searchParam}`);
+    const detailsPart = detailsId ? `/details/${detailsId}` : '';
+    navigate(`/page/${page}${detailsPart}${searchParam}`);
   };
 
   const handleItemClick = (index: number) => {
-    navigate(`/${currentPage}/${index + 1}${location.search}`);
+    navigate(`/page/${currentPage}/details/${index + 1}${location.search}`);
   };
 
   const handleCloseDetails = () => {
-    navigate(`/${currentPage}${location.search}`);
+    navigate(`/page/${currentPage}${location.search}`);
   };
 
   return (

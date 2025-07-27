@@ -15,6 +15,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .pagination button:hover:not(:disabled) {
@@ -28,7 +29,7 @@
 
 .pagination-page {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 13px;
   color: white;
   background-color: #1976d2;
   border-radius: 10px;
