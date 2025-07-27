@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Search } from '../components/Search';
 import { ResultsList } from '../components/ResultsList';
-import { Person } from '../components/ResultsList';
+import type { Person } from './components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -11,7 +11,7 @@ import '../cssComponents/App.css';
 const MainPage = () => {
   const { page = '1', detailsId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
+  //   const location = useLocation();
   const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
   const [results, setResults] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
@@ -70,7 +70,10 @@ const MainPage = () => {
           onItemClick={handleItemClick}
         />
         {results.length > 0 && (
-          <Pagination currentPage={currentPage} onPageChange={handlePageChange} />
+          <Pagination
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         )}
       </div>
 
