@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/:page(\d+)/:detailsId(\d+)?" element={<MainPage />} />
+          <Route path="/:page/:detailsId" element={<MainPage />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

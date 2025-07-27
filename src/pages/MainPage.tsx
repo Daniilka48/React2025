@@ -1,23 +1,31 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Search } from '../components/Search';
 import { ResultsList } from '../components/ResultsList';
 import type { Person } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
-import useLocalStorage from '../hooks/useLocalStorage';
 import '../cssComponents/App.css';
 
 const MainPage = () => {
-  const { page = '1', detailsId } = useParams();
+  const { detailsId } = useParams();
   const navigate = useNavigate();
-  //   const location = useLocation();
-  const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const searchFromUrl = queryParams.get('search') || '';
+  const pageFromUrl = parseInt(queryParams.get('page') || '1', 10);
+
+  const [searchTerm, setSearchTerm] = useState(searchFromUrl);
   const [results, setResults] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const currentPage = parseInt(page) || 1;
+  const currentPage = pageFromUrl || 1;
+
+  useEffect(() => {
+    setSearchTerm(searchFromUrl);
+  }, [searchFromUrl]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +33,7 @@ const MainPage = () => {
       setError(null);
       try {
         const query = searchTerm.trim()
-          ? `?search=${searchTerm.trim()}&page=${currentPage}`
+          ? `?search=${encodeURIComponent(searchTerm.trim())}&page=${currentPage}`
           : `?page=${currentPage}`;
         const res = await fetch(`https://swapi.py4e.com/api/people/${query}`);
         if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
@@ -43,20 +51,22 @@ const MainPage = () => {
   }, [searchTerm, currentPage]);
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    navigate('/1');
+    navigate(`/?search=${encodeURIComponent(term)}&page=1`);
   };
 
   const handlePageChange = (page: number) => {
-    navigate(`/${page}`);
+    const searchParam = searchTerm
+      ? `&search=${encodeURIComponent(searchTerm)}`
+      : '';
+    navigate(`/?page=${page}${searchParam}`);
   };
 
   const handleItemClick = (index: number) => {
-    navigate(`/${currentPage}/${index + 1}`);
+    navigate(`/${currentPage}/${index + 1}${location.search}`);
   };
 
   const handleCloseDetails = () => {
-    navigate(`/${currentPage}`);
+    navigate(`/${currentPage}${location.search}`);
   };
 
   return (
