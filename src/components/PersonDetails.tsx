@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../cssComponents/PersonDetails.css';
+// import '../cssComponents/PersonDetails.css';
 
 interface PersonDetailsProps {
   id: string;
