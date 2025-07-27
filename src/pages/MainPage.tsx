@@ -6,7 +6,7 @@ import type { Person } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
-import '../cssComponents/App.css';
+import '../cssComponents/MainPage.css';
 
 const MainPage = () => {
   const { detailsId } = useParams();

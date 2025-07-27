@@ -13,6 +13,11 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background-color: #7f9dee;
 }
 
 
