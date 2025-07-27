@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/27</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/27</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
@@ -110,36 +110,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from 'react';
 import '../cssComponents/Search.css';
 &nbsp;
 interface SearchProps {
@@ -147,36 +147,36 @@ interface SearchProps {
   onSearch: (term: string) =&gt; void;
 }
 &nbsp;
-export class Search extends React.Component&lt;SearchProps&gt; {
-  state = {
-    inputValue: this.props.searchTerm,
+export const Search: React.FC&lt;SearchProps&gt; = ({ searchTerm, onSearch }) =&gt; {
+  const [inputValue, setInputValue] = useState(searchTerm);
+&nbsp;
+  useEffect(() =&gt; {
+    setInputValue(searchTerm);
+  }, [searchTerm]);
+&nbsp;
+  const handleInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    setInputValue(e.target.value);
   };
 &nbsp;
-  handleInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-    this.setState({ inputValue: e.target.value });
+  const handleSearchClick = () =&gt; {
+    onSearch(inputValue.trim());
   };
 &nbsp;
-  handleSearchClick = () =&gt; {
-    this.props.onSearch(this.state.inputValue.trim());
-  };
-&nbsp;
-  render() {
-    return (
-      &lt;div className="search-container"&gt;
-        &lt;input
-          type="text"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-          className="search-input"
-          placeholder="Enter character name..."
-        /&gt;
-        &lt;button onClick={this.handleSearchClick} className="search-button"&gt;
-          Search
-        &lt;/button&gt;
-      &lt;/div&gt;
-    );
-  }
-}
+  return (
+    &lt;div className="search-container"&gt;
+      &lt;input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        className="search-input"
+        placeholder="Enter character name..."
+      /&gt;
+      &lt;button onClick={handleSearchClick} className="search-button"&gt;
+        Search
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -184,7 +184,7 @@ export class Search extends React.Component&lt;SearchProps&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-27T10:56:31.431Z
+                at 2025-07-27T18:02:50.833Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
