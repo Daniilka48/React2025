@@ -7,6 +7,7 @@ export type Person = {
   mass: string;
   birth_year: string;
   gender: string;
+  url: string;
 };
 
 interface ResultsListProps {

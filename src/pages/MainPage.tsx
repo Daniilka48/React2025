@@ -7,6 +7,7 @@ import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../cssComponents/MainPage.css';
 import { useCharacters } from '../hooks/useCharacters';
+import { getIdFromUrl } from '../utils/getIdFromUrl';
 
 const MainPage = () => {
   const { pageNumber, detailsId } = useParams();
@@ -42,7 +43,8 @@ const MainPage = () => {
   };
 
   const handleItemClick = (index: number) => {
-    navigate(`/page/${currentPage}/details/${index + 1}${location.search}`);
+    const id = getIdFromUrl(results[index].url);
+    navigate(`/page/${currentPage}/details/${id}${location.search}`);
   };
 
   const handleCloseDetails = () => {
