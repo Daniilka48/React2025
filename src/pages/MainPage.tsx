@@ -5,9 +5,11 @@ import { ResultsList } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
-import '../cssComponents/MainPage.css';
 import { useCharacters } from '../hooks/useCharacters';
 import { getIdFromUrl } from '../utils/getIdFromUrl';
+import Flyout from '../components/Flyout';
+import '../cssComponents/MainPage.css';
+import '../cssComponents/Flyout.css';
 
 const MainPage = () => {
   const { pageNumber, detailsId } = useParams();
@@ -74,6 +76,7 @@ const MainPage = () => {
           <PersonDetails id={detailsId} onClose={handleCloseDetails} />
         </div>
       )}
+      <Flyout />
     </div>
   );
 };
