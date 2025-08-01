@@ -9,6 +9,7 @@ const mockResults = [
     mass: '77',
     birth_year: '19BBY',
     gender: 'male',
+    url: 'https://swapi.py4e.com/api/people/1/',
   },
 ];
 
