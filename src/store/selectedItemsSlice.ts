@@ -6,6 +6,8 @@ export interface SelectedItem {
   birth_year: string;
   gender: string;
   url: string;
+  height: string;
+  mass: string;
 }
 
 interface SelectedItemsState {
