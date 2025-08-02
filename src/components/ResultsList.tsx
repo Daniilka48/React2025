@@ -1,4 +1,6 @@
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { toggleItem } from '../store/selectedItemsSlice';
 import '../cssComponents/resultsList.css';
 
 export type Person = {
@@ -7,6 +9,7 @@ export type Person = {
   mass: string;
   birth_year: string;
   gender: string;
+  url: string;
 };
 
 interface ResultsListProps {
@@ -22,20 +25,38 @@ export const ResultsList: React.FC<ResultsListProps> = ({
   error,
   onItemClick,
 }) => {
+  const dispatch = useAppDispatch();
+  const selectedItems = useAppSelector((state) => state.selectedItems.items);
+
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <ul className="results-list">
-      {results.map((person, index) => (
-        <li
-          key={person.name}
-          className="result-item"
-          onClick={() => onItemClick(index)}
-        >
-          <strong>{person.name}</strong> — {person.birth_year} — {person.gender}
-        </li>
-      ))}
+      {results.map((person, index) => {
+        const isSelected = selectedItems.some(
+          (item) => item.url === person.url
+        );
+
+        return (
+          <li
+            key={person.name}
+            className={`result-item ${isSelected ? 'selected' : ''}`}
+            onClick={() => onItemClick(index)}
+          >
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={(e) => {
+                e.stopPropagation();
+                dispatch(toggleItem(person));
+              }}
+            />
+            <strong>{person.name}</strong> — {person.birth_year} —{' '}
+            {person.gender}
+          </li>
+        );
+      })}
     </ul>
   );
 };

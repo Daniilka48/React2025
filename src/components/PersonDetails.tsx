@@ -1,5 +1,6 @@
 import React from 'react';
 import usePersonDetails from '../hooks/usePersonDetails';
+import '../cssComponents/PersonDetails.css';
 
 interface PersonDetailsProps {
   id: string;

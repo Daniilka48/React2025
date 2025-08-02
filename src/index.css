@@ -1,0 +1,11 @@
+:root {
+  --bg-color: rgb(255, 255, 255, 0.8);
+  --text-color: #000000;
+  --nav-bg-color: rgba(70, 157, 250, 0.5);
+}
+
+[data-theme='dark'] {
+  --bg-color: rgb(30, 30, 30, 0.8);
+  --text-color: #ffffff;
+  --nav-bg-color: rgba(3, 61, 124, 0.5);
+}

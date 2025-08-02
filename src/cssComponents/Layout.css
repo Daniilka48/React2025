@@ -5,7 +5,7 @@
 }
 
 .layout-header {
-  background: rgb(0, 123, 255, 0.5);
+  background: var(--nav-bg-color);
   padding: 1rem;
   color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.9);
@@ -29,4 +29,9 @@
 .layout-main {
   flex: 1;
   overflow-y: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
 }
