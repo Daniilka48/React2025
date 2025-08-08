@@ -5,7 +5,10 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.py4e.com/api/' }),
   endpoints: (builder) => ({
-    getCharacters: builder.query<{ results: Person[] }, { page: number; search: string }>({
+    getCharacters: builder.query<
+      { results: Person[] },
+      { page: number; search: string }
+    >({
       query: ({ page, search }) => {
         const query = search.trim()
           ? `people/?search=${encodeURIComponent(search)}&page=${page}`
@@ -19,7 +22,4 @@ export const api = createApi({
   }),
 });
 
-export const {
-  useGetCharactersQuery,
-  useGetCharacterByIdQuery,
-} = api;
+export const { useGetCharactersQuery, useGetCharacterByIdQuery } = api;
