@@ -64,7 +64,7 @@ const MainPage = () => {
     <div className="main-container">
       <div className="left-panel">
         <Search searchTerm={searchTerm} onSearch={handleSearch} />
-        <button onClick={() => refetch()}> Обновить данные </button>
+        <button onClick={() => refetch()}> Update data </button>
         <ResultsList
           results={results}
           loading={isLoading}

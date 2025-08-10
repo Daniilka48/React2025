@@ -20,7 +20,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
     return (
       <div className="details error">
         Error loading data.
-        <button onClick={() => refetch()}>Повторить</button>
+        <button onClick={() => refetch()}>Try again</button>
       </div>
     );
   }
