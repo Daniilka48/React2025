@@ -1,6 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PersonDetails from '../components/PersonDetails';
+import type { MockedFunction } from 'vitest';
+
+vi.mock('../store/apiSlice', () => ({
+  useGetCharacterByIdQuery: vi.fn(),
+}));
+
+import { useGetCharacterByIdQuery } from '../store/apiSlice';
+
+type UseGetCharacterByIdQueryReturn = ReturnType<
+  typeof useGetCharacterByIdQuery
+>;
 
 describe('PersonDetails', () => {
   const mockPerson = {
@@ -12,59 +23,95 @@ describe('PersonDetails', () => {
   };
 
   beforeEach(() => {
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders loading state initially', () => {
-    vi.spyOn(global, 'fetch').mockImplementation(() => new Promise(() => {}));
+    (
+      useGetCharacterByIdQuery as unknown as MockedFunction<
+        typeof useGetCharacterByIdQuery
+      >
+    ).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      error: undefined,
+      refetch: vi.fn(),
+      isFetching: true,
+      isSuccess: false,
+      isError: false,
+      status: 'pending',
+    } as UseGetCharacterByIdQueryReturn);
 
     render(<PersonDetails id="1" onClose={() => {}} />);
+
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
-  it('renders person data after fetch', async () => {
-    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockPerson,
-    } as Response);
+  it('renders person data after fetch', () => {
+    (
+      useGetCharacterByIdQuery as unknown as MockedFunction<
+        typeof useGetCharacterByIdQuery
+      >
+    ).mockReturnValue({
+      data: mockPerson,
+      isLoading: false,
+      error: undefined,
+      refetch: vi.fn(),
+      isFetching: false,
+      isSuccess: true,
+      isError: false,
+      status: 'fulfilled',
+    } as UseGetCharacterByIdQueryReturn);
 
     render(<PersonDetails id="1" onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
-    });
+    const birthYearParagraph = screen.getByText('Birth Year:', {
+      selector: 'strong',
+    }).parentElement;
+    expect(birthYearParagraph).toHaveTextContent('Birth Year: 19BBY');
 
-    expect(
-      screen.getByText(
-        (_, element) => element?.textContent === 'Birth Year: 19BBY'
-      )
-    ).toBeInTheDocument();
+    const genderParagraph = screen.getByText('Gender:', {
+      selector: 'strong',
+    }).parentElement;
+    expect(genderParagraph).toHaveTextContent('Gender: male');
 
-    expect(
-      screen.getByText((_, element) => element?.textContent === 'Gender: male')
-    ).toBeInTheDocument();
+    const heightParagraph = screen.getByText('Height:', {
+      selector: 'strong',
+    }).parentElement;
+    expect(heightParagraph).toHaveTextContent('Height: 172 cm');
 
-    expect(
-      screen.getByText(
-        (_, element) => element?.textContent === 'Height: 172 cm'
-      )
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText((_, element) => element?.textContent === 'Mass: 77 kg')
-    ).toBeInTheDocument();
+    const massParagraph = screen.getByText('Mass:', {
+      selector: 'strong',
+    }).parentElement;
+    expect(massParagraph).toHaveTextContent('Mass: 77 kg');
   });
 
-  it('renders error state on fetch failure', async () => {
-    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: false,
-      status: 404,
-    } as Response);
+  it('renders error state on fetch failure and retry button', () => {
+    const mockRefetch = vi.fn();
+
+    (
+      useGetCharacterByIdQuery as unknown as MockedFunction<
+        typeof useGetCharacterByIdQuery
+      >
+    ).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      error: { status: 404, data: 'Not found' },
+      refetch: mockRefetch,
+      isFetching: false,
+      isSuccess: false,
+      isError: true,
+      status: 'rejected',
+    } as UseGetCharacterByIdQueryReturn);
 
     render(<PersonDetails id="999" onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(screen.getByText(/error/i)).toBeInTheDocument();
-    });
+    expect(screen.getByText(/error loading data/i)).toBeInTheDocument();
+
+    const retryButton = screen.getByText(/try again/i);
+    expect(retryButton).toBeInTheDocument();
+
+    fireEvent.click(retryButton);
+    expect(mockRefetch).toHaveBeenCalled();
   });
 });

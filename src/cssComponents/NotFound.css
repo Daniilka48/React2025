@@ -29,7 +29,7 @@
   text-decoration: none;
   border-radius: 8px;
   transition: background-color 0.3s ease;
-  box-shadow: 0 0 10px rgba(0,0,0,0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
 }
 
 .not-found a:hover {
