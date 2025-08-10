@@ -1,6 +1,6 @@
 import React from 'react';
-import usePersonDetails from '../hooks/usePersonDetails';
 import '../cssComponents/PersonDetails.css';
+import { useGetCharacterByIdQuery } from '../store/apiSlice';
 
 interface PersonDetailsProps {
   id: string;
@@ -8,10 +8,22 @@ interface PersonDetailsProps {
 }
 
 const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
-  const { person, loading, error } = usePersonDetails(id);
+  const {
+    data: person,
+    isLoading,
+    error,
+    refetch,
+  } = useGetCharacterByIdQuery(id);
 
-  if (loading) return <div className="details-loading">Loading...</div>;
-  if (error) return <div className="details-error">Error: {error}</div>;
+  if (isLoading) return <div className="details-loading">Loading...</div>;
+  if (error) {
+    return (
+      <div className="details error">
+        Error loading data.
+        <button onClick={() => refetch()}>Повторить</button>
+      </div>
+    );
+  }
   if (!person) return null;
 
   return (
@@ -32,6 +44,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
       <p>
         <strong>Mass:</strong> {person.mass} kg
       </p>
+      <button onClick={() => refetch()}>Update</button>
     </div>
   );
 };
