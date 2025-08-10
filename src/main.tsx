@@ -5,6 +5,7 @@ import App from './App.tsx';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from './context/ThemeProvider.tsx';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const rootElement = document.getElementById('root');
 
@@ -16,7 +17,9 @@ createRoot(rootElement).render(
   <Provider store={store}>
     <ThemeProvider>
       <ErrorBoundary>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ErrorBoundary>
     </ThemeProvider>
   </Provider>
