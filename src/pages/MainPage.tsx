@@ -58,17 +58,13 @@ const MainPage = () => {
     navigate(`/page/${currentPage}${location.search}`);
   };
 
-  const errorMessage = error
-    ? 'Ошибка загрузки данных'
-    : null;
+  const errorMessage = error ? 'Ошибка загрузки данных' : null;
 
   return (
     <div className="main-container">
       <div className="left-panel">
         <Search searchTerm={searchTerm} onSearch={handleSearch} />
-        <button onClick={() => refetch()}>
-          Обновить данные
-        </button>
+        <button onClick={() => refetch()}> Обновить данные </button>
         <ResultsList
           results={results}
           loading={isLoading}
