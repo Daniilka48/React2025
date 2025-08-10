@@ -5,11 +5,11 @@ import { ResultsList } from '../components/ResultsList';
 import Pagination from '../components/Pagination';
 import PersonDetails from '../components/PersonDetails';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useCharacters } from '../hooks/useCharacters';
 import { getIdFromUrl } from '../utils/getIdFromUrl';
 import Flyout from '../components/Flyout';
 import '../cssComponents/MainPage.css';
 import '../cssComponents/Flyout.css';
+import { useGetCharactersQuery } from '../store/apiSlice';
 
 const MainPage = () => {
   const { pageNumber, detailsId } = useParams();
@@ -29,7 +29,12 @@ const MainPage = () => {
     }
   }, [searchFromUrl, searchTerm, setSearchTerm]);
 
-  const { results, loading, error } = useCharacters(currentPage, searchTerm);
+  const { data, error, isLoading, refetch } = useGetCharactersQuery({
+    page: currentPage,
+    search: searchTerm,
+  });
+
+  const results = data?.results || [];
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -53,14 +58,17 @@ const MainPage = () => {
     navigate(`/page/${currentPage}${location.search}`);
   };
 
+  const errorMessage = error ? 'Ошибка загрузки данных' : null;
+
   return (
     <div className="main-container">
       <div className="left-panel">
         <Search searchTerm={searchTerm} onSearch={handleSearch} />
+        <button onClick={() => refetch()}> Update data </button>
         <ResultsList
           results={results}
-          loading={loading}
-          error={error}
+          loading={isLoading}
+          error={errorMessage}
           onItemClick={handleItemClick}
         />
         {results.length > 0 && (

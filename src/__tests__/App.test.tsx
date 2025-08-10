@@ -1,56 +1,42 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import selectedItemsReducer from '../store/selectedItemsSlice';
+import App from '../App';
 import { ThemeProvider } from '../context/ThemeProvider';
+import { store } from '../store/store';
 
-beforeEach(() => {
-  vi.spyOn(global, 'fetch').mockResolvedValue({
-    ok: true,
-    json: async () => ({
-      results: [
-        {
-          name: 'Luke Skywalker',
-          height: '172',
-          mass: '77',
-          birth_year: '19BBY',
-          gender: 'male',
-          url: 'https://swapi.py4e.com/api/people/1/',
-        },
-      ],
-    }),
-  } as Response);
-});
-
-afterEach(() => {
-  vi.restoreAllMocks();
-});
-
-function renderWithProviders(ui: React.ReactElement) {
-  const store = configureStore({
-    reducer: {
-      selectedItems: selectedItemsReducer,
-    },
-  });
-
+function renderWithProviders(initialEntries: string[]) {
   return render(
     <Provider store={store}>
-      <ThemeProvider>{ui}</ThemeProvider>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={initialEntries}>
+          <App />
+        </MemoryRouter>
+      </ThemeProvider>
     </Provider>
   );
 }
 
-describe('App Component', () => {
-  it('loads and displays results on mount', async () => {
-    renderWithProviders(<App />);
-    expect(await screen.findByText(/luke skywalker/i)).toBeInTheDocument();
+describe('App routing', () => {
+  it('renders layout and main page on root path "/"', () => {
+    renderWithProviders(['/']);
+    expect(screen.getByText(/About/i)).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
-  it('displays error on failed fetch', async () => {
-    vi.spyOn(global, 'fetch').mockRejectedValue(new Error('Fetch error'));
-    renderWithProviders(<App />);
-    expect(await screen.findByText(/error: fetch error/i)).toBeInTheDocument();
+  it('renders About page on /about route', () => {
+    renderWithProviders(['/about']);
+    expect(screen.getByText(/About/i)).toBeInTheDocument();
+  });
+
+  it('renders NotFound page on unknown route', () => {
+    renderWithProviders(['/some/unknown/path']);
+    expect(screen.getByText(/Not Found/i)).toBeInTheDocument();
+  });
+
+  it('renders MainPage with details view when detailsId param is set', () => {
+    renderWithProviders(['/page/1/details/5']);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 });
