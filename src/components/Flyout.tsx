@@ -4,8 +4,11 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearSelected } from '../store/selectedItemsSlice';
 import { compileCsv } from '../../app/[locale]/actions/compileCsv';
+import { useTranslations } from 'next-intl';
 
 const Flyout: React.FC = () => {
+  const t = useTranslations();
+
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector((state) => state.selectedItems.items);
 
@@ -26,9 +29,9 @@ const Flyout: React.FC = () => {
 
   return (
     <div className="flyout">
-      <span>{selectedItems.length} items are selected</span>
-      <button onClick={handleUnselect}>Unselect all</button>
-      <button onClick={handleDownload}>Download</button>
+      <span>{t('flyout_selected', { count: selectedItems.length })}</span>
+      <button onClick={handleUnselect}>{t('flyout_unselect')}</button>
+      <button onClick={handleDownload}>{t('flyout_download')}</button>
     </div>
   );
 };

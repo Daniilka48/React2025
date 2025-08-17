@@ -1,0 +1,72 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/cssComponents/ThemeSwitcher.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/* .theme-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid #ccc;
+  max-width: fit-content;
+  font-size: 19px;
+}
+
+.theme-switcher label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.theme-switcher input[type='radio'] {
+  accent-color: #007bff;
+  cursor: pointer;
+} */
+
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/cssComponents/Layout.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.layout-header {
+  background: var(--nav-bg-color);
+  padding: 1rem;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.layout-header nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.layout-header a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.layout-header a:hover {
+  text-decoration: underline;
+}
+
+.layout-main {
+  flex: 1 1;
+  overflow-y: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+

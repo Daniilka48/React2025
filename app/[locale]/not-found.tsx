@@ -1,11 +1,14 @@
 import { Link } from '../navigation';
-import '@/cssComponents/NotFound.css';
+import '../../src/cssComponents/NotFound.css';
+import { useTranslations } from 'next-intl';
 
 export default function NotFound() {
+  const t = useTranslations();
+
   return (
     <div className="not-found">
-      <h1>404 - Not Found</h1>
-      <p>The page you&#39;re looking for doesn&#39;t exist.</p>
+      <h1>{t('notfound_title')}</h1>
+      <p>{t('notfound_text')}</p>
       <Link href="/">Return to Home</Link>
     </div>
   );

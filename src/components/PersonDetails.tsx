@@ -1,6 +1,7 @@
 import React from 'react';
 import '../cssComponents/PersonDetails.css';
 import { useGetCharacterByIdQuery } from '../store/apiSlice';
+import { useTranslations } from 'next-intl';
 
 interface PersonDetailsProps {
   id: string;
@@ -15,7 +16,10 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
     refetch,
   } = useGetCharacterByIdQuery(id);
 
-  if (isLoading) return <div className="details-loading">Loading...</div>;
+  const t = useTranslations();
+
+  if (isLoading)
+    return <div className="details-loading">{t('details_loading')}</div>;
   if (error) {
     return (
       <div className="details error">

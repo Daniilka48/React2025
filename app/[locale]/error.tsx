@@ -1,6 +1,6 @@
 'use client';
 
-import '../cssComponents/ErrorBoundary.css';
+import '../../src/cssComponents/ErrorBoundary.css';
 
 export default function Error({ reset }: { error: Error; reset: () => void }) {
   return (

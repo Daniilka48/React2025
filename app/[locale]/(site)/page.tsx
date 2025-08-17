@@ -3,15 +3,18 @@ import MainPageClient from '../../../app/[locale]/(site)/MainPageClient';
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: { search?: string; page?: string; details?: string };
+  searchParams?: Promise<{ search?: string; page?: string; details?: string }>;
 }) {
-  const page = Number(searchParams?.page ?? '1');
-  const search = searchParams?.search ?? '';
+  const params = await searchParams;
+  const page = Number(params?.page ?? '1');
+  const search = params?.search ?? '';
+  const detailsId = params?.details;
+
   return (
     <MainPageClient
       initialPage={page}
       initialSearch={search}
-      initialDetailsId={searchParams?.details}
+      initialDetailsId={detailsId}
     />
   );
 }

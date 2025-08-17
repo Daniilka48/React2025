@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { toggleItem } from '../store/selectedItemsSlice';
 import '../cssComponents/resultsList.css';
+import { useTranslations } from 'next-intl';
 
 export type Person = {
   name: string;
@@ -28,7 +29,9 @@ export const ResultsList: React.FC<ResultsListProps> = ({
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector((state) => state.selectedItems.items);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  const t = useTranslations();
+
+  if (loading) return <div className="loading">{t('details_loading')}</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (

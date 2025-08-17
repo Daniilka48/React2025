@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from '../../../app/navigation';
-import '@/cssComponents/MainPage.css';
-import '@/cssComponents/Flyout.css';
+import '../../../src/cssComponents/MainPage.css';
+import '../../../src/cssComponents/Flyout.css';
 import { useGetCharactersQuery } from '../../../src/store/apiSlice';
 import Flyout from '../../../src/components/Flyout';
 import useLocalStorage from '../../../src/hooks/useLocalStorage';

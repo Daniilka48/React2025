@@ -1,12 +1,13 @@
-import { Link } from '../../navigation';
 import { useTranslations } from 'next-intl';
-import '@/cssComponents/Layout.css';
+import { Link } from '../../navigation';
 import ThemeSwitcher from '../../../src/components/ThemeSwitcher';
+import '../../../src/cssComponents/Layout.css';
 
 export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
+  params: { locale: string };
 }) {
   const t = useTranslations();
 
@@ -15,8 +16,8 @@ export default function SiteLayout({
       <header className="layout-header">
         <nav className="nav-bar">
           <div className="nav-links">
-            <Link href="/">{t('nav.search')}</Link>
-            <Link href="/about">{t('nav.about')}</Link>
+            <Link href="/">{t('nav_search')}</Link>
+            <Link href="/about">{t('nav_about')}</Link>
           </div>
           <ThemeSwitcher />
         </nav>

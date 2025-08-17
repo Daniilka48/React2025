@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Link } from '../../../navigation';
-import '@/cssComponents/About.css';
+import '../../../../src/cssComponents/About.css';
 
 export default function About() {
   return (
