@@ -1,8 +1,12 @@
+'use client';
+
 import React from 'react';
 import { useTheme } from '../context/useTheme';
 import '../cssComponents/ThemeSwitcher.css';
+import { useTranslations } from 'next-intl';
 
 const ThemeSwitcher: React.FC = () => {
+  const t = useTranslations();
   const { theme, setTheme } = useTheme();
 
   return (
@@ -14,7 +18,7 @@ const ThemeSwitcher: React.FC = () => {
           checked={theme === 'light'}
           onChange={() => setTheme('light')}
         />
-        Light
+        {t('theme_light')}
       </label>
       <label>
         <input
@@ -23,7 +27,7 @@ const ThemeSwitcher: React.FC = () => {
           checked={theme === 'dark'}
           onChange={() => setTheme('dark')}
         />
-        Dark
+        {t('theme_dark')}
       </label>
     </div>
   );

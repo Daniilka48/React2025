@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import '../cssComponents/Search.css';
+import { useTranslations } from 'next-intl';
 
 interface SearchProps {
   searchTerm: string;
@@ -7,6 +10,7 @@ interface SearchProps {
 }
 
 export const Search: React.FC<SearchProps> = ({ searchTerm, onSearch }) => {
+  const t = useTranslations();
   const [inputValue, setInputValue] = useState(searchTerm);
 
   useEffect(() => {
@@ -28,10 +32,10 @@ export const Search: React.FC<SearchProps> = ({ searchTerm, onSearch }) => {
         value={inputValue}
         onChange={handleInputChange}
         className="search-input"
-        placeholder="Enter character name..."
+        placeholder={t('search_placeholder')}
       />
       <button onClick={handleSearchClick} className="search-button">
-        Search
+        {t('search_button')}
       </button>
     </div>
   );

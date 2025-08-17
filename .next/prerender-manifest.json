@@ -1,0 +1,11 @@
+{
+  "version": 4,
+  "routes": { "/en": {}, "/ru": {} },
+  "dynamicRoutes": { "/[locale]": { "fallback": null } },
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "b2c216ffda948065c3dfb7d2b009dd16",
+    "previewModeSigningKey": "b21e3297d5d641233c70c1112112aba83ec6df62b27f196d829852fd2d52121d",
+    "previewModeEncryptionKey": "31510aa3b680950a001463a4e82eea1d225c51bddc8c035b4181d4ffc0588e9d"
+  }
+}

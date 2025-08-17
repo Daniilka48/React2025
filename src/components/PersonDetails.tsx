@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import '../cssComponents/PersonDetails.css';
 import { useGetCharacterByIdQuery } from '../store/apiSlice';
+import { useTranslations } from 'next-intl';
 
 interface PersonDetailsProps {
   id: string;
@@ -15,12 +18,15 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
     refetch,
   } = useGetCharacterByIdQuery(id);
 
-  if (isLoading) return <div className="details-loading">Loading...</div>;
+  const t = useTranslations();
+
+  if (isLoading)
+    return <div className="details-loading">{t('details_loading')}</div>;
   if (error) {
     return (
       <div className="details error">
-        Error loading data.
-        <button onClick={() => refetch()}>Try again</button>
+        {t('details_error')}
+        <button onClick={() => refetch()}>{t('details_tryAgain')}</button>
       </div>
     );
   }
@@ -44,7 +50,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
       <p>
         <strong>Mass:</strong> {person.mass} kg
       </p>
-      <button onClick={() => refetch()}>Update</button>
+      <button onClick={() => refetch()}>{t('details_update')}</button>
     </div>
   );
 };

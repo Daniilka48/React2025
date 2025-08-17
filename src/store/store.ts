@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import selectedItemsReducer from './selectedItemsSlice.ts';
+import selectedItemsReducer from './selectedItemsSlice';
 import { api } from './apiSlice';
 
 export const store = configureStore({

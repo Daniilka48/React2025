@@ -1,8 +1,14 @@
+'use client';
+
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearSelected } from '../store/selectedItemsSlice';
+import { compileCsv } from '../../app/[locale]/actions/compileCsv';
+import { useTranslations } from 'next-intl';
 
 const Flyout: React.FC = () => {
+  const t = useTranslations();
+
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector((state) => state.selectedItems.items);
 
@@ -12,15 +18,9 @@ const Flyout: React.FC = () => {
     dispatch(clearSelected());
   };
 
-  const handleDownload = () => {
-    const csv = selectedItems
-      .map(({ name, birth_year, gender, url }) =>
-        [name, birth_year, gender, url].map((val) => `"${val}"`).join(',')
-      )
-      .join('\n');
-    const blob = new Blob([`Name,Birth Year,Gender,URL\n${csv}`], {
-      type: 'text/csv',
-    });
+  const handleDownload = async () => {
+    const csv = await compileCsv(selectedItems);
+    const blob = new Blob([csv], { type: 'text/csv' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `${selectedItems.length}_items.csv`;
@@ -29,9 +29,9 @@ const Flyout: React.FC = () => {
 
   return (
     <div className="flyout">
-      <span>{selectedItems.length} items are selected</span>
-      <button onClick={handleUnselect}>Unselect all</button>
-      <button onClick={handleDownload}>Download</button>
+      <span>{t('flyout_selected', { count: selectedItems.length })}</span>
+      <button onClick={handleUnselect}>{t('flyout_unselect')}</button>
+      <button onClick={handleDownload}>{t('flyout_download')}</button>
     </div>
   );
 };
