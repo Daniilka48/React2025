@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import '../cssComponents/Pagination.css';
 import { useTranslations } from 'next-intl';

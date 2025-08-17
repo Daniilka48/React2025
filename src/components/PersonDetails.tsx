@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import '../cssComponents/PersonDetails.css';
 import { useGetCharacterByIdQuery } from '../store/apiSlice';
