@@ -1,0 +1,21 @@
+{
+  "nav.search": "Поиск",
+  "nav.about": "О проекте",
+  "theme.light": "Светлая",
+  "theme.dark": "Тёмная",
+  "search.placeholder": "Введите имя персонажа...",
+  "search.button": "Искать",
+  "pagination.prev": "Назад",
+  "pagination.next": "Вперёд",
+  "flyout.selected": "Выбрано элементов: {count}",
+  "flyout.unselect": "Снять выделение",
+  "flyout.download": "Скачать",
+  "details.loading": "Загрузка...",
+  "details.error": "Ошибка при загрузке данных.",
+  "details.tryAgain": "Попробовать снова",
+  "details.update": "Обновить",
+  "notfound.title": "404 - Страница не найдена",
+  "notfound.text": "Страница, которую вы ищете, не существует.",
+  "about.title": "О проекте",
+  "about.back": "Назад к поиску"
+}

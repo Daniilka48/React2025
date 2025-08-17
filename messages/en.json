@@ -1,0 +1,21 @@
+{
+  "nav.search": "Search",
+  "nav.about": "About",
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "search.placeholder": "Enter character name...",
+  "search.button": "Search",
+  "pagination.prev": "Previous",
+  "pagination.next": "Next",
+  "flyout.selected": "{count} items are selected",
+  "flyout.unselect": "Unselect all",
+  "flyout.download": "Download",
+  "details.loading": "Loading...",
+  "details.error": "Error loading data.",
+  "details.tryAgain": "Try again",
+  "details.update": "Update",
+  "notfound.title": "404 - Not Found",
+  "notfound.text": "The page you're looking for doesn't exist.",
+  "about.title": "About",
+  "about.back": "Back to Search"
+}
