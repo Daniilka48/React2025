@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { setRequestLocale } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import Providers from './providers';
+import { NextIntlClientProvider } from 'next-intl';
 import '../globals.css';
 import { locales } from '../../i18n';
 
@@ -21,10 +22,14 @@ export default async function LocaleLayout({
   params: { locale: string };
 }) {
   setRequestLocale(locale);
+  const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <body>
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
