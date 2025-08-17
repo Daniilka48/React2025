@@ -11,6 +11,7 @@ import PersonDetails from '../../../src/components/PersonDetails';
 import Pagination from '../../../src/components/Pagination';
 import { ResultsList } from '../../../src/components/ResultsList';
 import { Search } from '../../../src/components/Search';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   initialPage: number;
@@ -44,7 +45,7 @@ export default function MainPageClient({
     params.set('page', String(currentPage));
     if (detailsId) params.set('details', detailsId);
     router.replace(`${pathname}?${params.toString()}`);
-  }, []);
+  }, [currentPage, detailsId, pathname, router, searchTerm]);
 
   const results = data?.results || [];
 
@@ -81,13 +82,14 @@ export default function MainPageClient({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const errorMessage = error ? 'Ошибка загрузки данных' : null;
+  const t = useTranslations();
+  const errorMessage = error ? t('details_error') : null;
 
   return (
     <div className="main-container">
       <div className="left-panel">
         <Search searchTerm={searchTerm} onSearch={handleSearch} />
-        <button onClick={() => refetch()}> Update data </button>
+        <button onClick={() => refetch()}> {t('details_update')} </button>
         <ResultsList
           results={results}
           loading={isLoading}

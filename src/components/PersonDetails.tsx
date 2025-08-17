@@ -23,8 +23,8 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
   if (error) {
     return (
       <div className="details error">
-        Error loading data.
-        <button onClick={() => refetch()}>Try again</button>
+        {t('details_error')}
+        <button onClick={() => refetch()}>{t('details_tryAgain')}</button>
       </div>
     );
   }
@@ -48,7 +48,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ id, onClose }) => {
       <p>
         <strong>Mass:</strong> {person.mass} kg
       </p>
-      <button onClick={() => refetch()}>Update</button>
+      <button onClick={() => refetch()}>{t('details_update')}</button>
     </div>
   );
 };

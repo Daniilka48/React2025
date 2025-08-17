@@ -16,6 +16,7 @@
   "details_update": "Update",
   "notfound_title": "404 - Not Found",
   "notfound_text": "The page you're looking for doesn't exist.",
-  "about_title": "About",
+  "notfound_button": "Return to home",
+  "about_bio": "Graduate of Lipetsk State Technical University, majoring in Economics and Management at Enterprises. Before becoming a programmer, he worked in sales, service and SMM, developing communication and promotion skills. Currently studying on the React course at RS School, where he has already implemented several projects and significantly improved his programming skills.",
   "about_back": "Back to Search"
 }

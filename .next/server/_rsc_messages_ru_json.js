@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * ATTENTION: An "eval-source-map" devtool has been used.
  * This devtool is neither made for production nor for readable output files.
@@ -7,19 +7,18 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-exports.id = "_rsc_messages_ru_json";
-exports.ids = ["_rsc_messages_ru_json"];
+exports.id = '_rsc_messages_ru_json';
+exports.ids = ['_rsc_messages_ru_json'];
 exports.modules = {
-
-/***/ "(rsc)/./messages/ru.json":
-/*!**************************!*\
+  /***/ '(rsc)/./messages/ru.json':
+    /*!**************************!*\
   !*** ./messages/ru.json ***!
   \**************************/
-/***/ ((module) => {
+    /***/ (module) => {
+      module.exports = /*#__PURE__*/ JSON.parse(
+        '{"nav_search":"Поиск","nav_about":"О проекте","theme_light":"Светлая","theme_dark":"Тёмная","search_placeholder":"Введите имя персонажа...","search_button":"Искать","pagination_prev":"Назад","pagination_next":"Вперёд","flyout_selected":"Выбрано элементов: {count}","flyout_unselect":"Снять выделение","flyout_download":"Скачать","details_loading":"Загрузка...","details_error":"Ошибка при загрузке данных.","details_tryAgain":"Попробовать снова","details_update":"Обновить","notfound_title":"404 - Страница не найдена","notfound_text":"Страница, которую вы ищете, не существует.","notfound_button":"Назад на главную","about_bio":"Выпускник Липецкого государственного технического университета по специальности «Экономика и управление на предприятии». До того, как стать программистом, работал в сфере продаж, сервиса и SMM, развивая навыки коммуникации и продвижения. В настоящее время обучается на курсе React в RS School, где уже реализовал несколько проектов и значительно улучшил свои навыки программирования.","about_back":"Назад к поиску"}'
+      );
 
-module.exports = /*#__PURE__*/JSON.parse('{"nav_search":"Поиск","nav_about":"О проекте","theme_light":"Светлая","theme_dark":"Тёмная","search_placeholder":"Введите имя персонажа...","search_button":"Искать","pagination_prev":"Назад","pagination_next":"Вперёд","flyout_selected":"Выбрано элементов: {count}","flyout_unselect":"Снять выделение","flyout_download":"Скачать","details_loading":"Загрузка...","details_error":"Ошибка при загрузке данных.","details_tryAgain":"Попробовать снова","details_update":"Обновить","notfound_title":"404 - Страница не найдена","notfound_text":"Страница, которую вы ищете, не существует.","about_title":"О проекте","about_back":"Назад к поиску"}');
-
-/***/ })
-
+      /***/
+    },
 };
-;

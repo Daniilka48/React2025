@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import { Link } from '../../../navigation';
 import '../../../../src/cssComponents/About.css';
+import { useTranslations } from 'next-intl';
 
 export default function About() {
+  const t = useTranslations();
+
   return (
     <div className="about-page">
       <Image
@@ -16,14 +19,7 @@ export default function About() {
       <h1>Daniil Terekhin</h1>
       <h2>Frontend Developer</h2>
 
-      <p className="about-bio">
-        Graduate of Lipetsk State Technical University, majoring in Economics
-        and Management at Enterprises. Before becoming a programmer, he worked
-        in sales, service and SMM, developing communication and promotion
-        skills. Currently studying on the React course at RS School, where he
-        has already implemented several projects and significantly improved his
-        programming skills.
-      </p>
+      <p className="about-bio">{t('about_bio')}</p>
 
       <p>
         RS School React Course:{' '}
@@ -48,7 +44,7 @@ export default function About() {
       </p>
 
       <Link href="/" className="about-link-back">
-        Back to Search
+        {t('about_back')}
       </Link>
     </div>
   );
