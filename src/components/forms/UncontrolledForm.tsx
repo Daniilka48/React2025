@@ -49,7 +49,7 @@ const UncontrolledForm = ({ onClose }: Props) => {
       gender: genderRef.current?.value || '',
       acceptedTnC: !!tncRef.current?.checked,
       country: countryRef.current?.value || '',
-      image: base64Image,
+      picture: base64Image || '',
     };
 
     try {
