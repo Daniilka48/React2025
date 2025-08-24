@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
+import { addHookForm } from '../../store/formsSlice';
 import { formSchema } from '../../validation/formSchema';
 import type { FormSchemaType } from '../../validation/formSchema';
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import { getPasswordStrength } from '../../utils/passwordStrength';
+import { fileToBase64 } from '../../utils/fileToBase64';
 import type { FormData as ReduxFormData } from '../../store/formsSlice';
-import { addHookForm } from '../../store/formsSlice';
 
 interface Props {
   onClose: () => void;
@@ -13,21 +16,20 @@ interface Props {
 
 const HookFormForm = ({ onClose }: Props) => {
   const dispatch = useDispatch();
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm<FormSchemaType>({
     resolver: yupResolver(formSchema),
     mode: 'onChange',
   });
 
   const onSubmit = (data: FormSchemaType) => {
-    const newData: ReduxFormData = {
-      id: uuidv4(),
-      ...data,
-    };
+    const newData: ReduxFormData = { id: uuidv4(), ...data };
     dispatch(addHookForm(newData));
     onClose();
   };
@@ -56,8 +58,15 @@ const HookFormForm = ({ onClose }: Props) => {
 
       <label>
         Password:
-        <input type="password" {...register('password')} />
+        <input
+          type="password"
+          {...register('password')}
+          onChange={(e) =>
+            setPasswordStrength(getPasswordStrength(e.target.value))
+          }
+        />
         <p>{errors.password?.message}</p>
+        <div>Password strength: {passwordStrength}/4</div>
       </label>
 
       <label>
@@ -78,7 +87,7 @@ const HookFormForm = ({ onClose }: Props) => {
 
       <label>
         Country:
-        <input type="text" {...register('country')} />
+        <input {...register('country')} />
         <p>{errors.country?.message}</p>
       </label>
 
@@ -89,8 +98,17 @@ const HookFormForm = ({ onClose }: Props) => {
 
       <label>
         Picture:
-        <input type="file" accept="image/*" {...register('image')} />
-        <p>{errors.image?.message as string}</p>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const base64 = await fileToBase64(file);
+            setValue('picture', base64, { shouldValidate: true });
+          }}
+        />
+        <p>{errors.picture?.message}</p>
       </label>
 
       <button type="submit" disabled={!isValid}>

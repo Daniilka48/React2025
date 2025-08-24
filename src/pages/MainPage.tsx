@@ -4,6 +4,7 @@ import type { RootState } from '../store/store';
 import SharedModal from '../components/modals/SharedModal';
 import UncontrolledForm from '../components/forms/UncontrolledForm';
 import HookFormForm from '../components/forms/HookFormForm';
+import '../pagesCss/MainPage.css';
 
 const MainPage = () => {
   const [openUncontrolled, setOpenUncontrolled] = useState(false);
@@ -40,7 +41,10 @@ const MainPage = () => {
       <div>
         {uncontrolledData.map((item) => (
           <div key={item.id} className="card">
-            {item.name} - {item.email}
+            <p>
+              {item.name} - {item.email}
+            </p>
+            {item.picture && <img src={item.picture} alt={item.name} />}
           </div>
         ))}
       </div>
@@ -49,7 +53,10 @@ const MainPage = () => {
       <div>
         {hookFormData.map((item) => (
           <div key={item.id} className="card">
-            {item.name} - {item.email}
+            <p>
+              {item.name} - {item.email}
+            </p>
+            {item.picture && <img src={item.picture} alt={item.name} />}
           </div>
         ))}
       </div>

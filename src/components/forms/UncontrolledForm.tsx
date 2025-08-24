@@ -1,11 +1,13 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { addUncontrolledForm } from '../../store/formsSlice';
 import type { AppDispatch } from '../../store/store';
 import { formSchema } from '../../validation/formSchema';
+import { v4 as uuidv4 } from 'uuid';
 import { ValidationError } from 'yup';
+import { getPasswordStrength } from '../../utils/passwordStrength';
+import { fileToBase64 } from '../../utils/fileToBase64';
 
 interface Props {
   onClose: () => void;
@@ -13,6 +15,7 @@ interface Props {
 
 const UncontrolledForm = ({ onClose }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -22,9 +25,15 @@ const UncontrolledForm = ({ onClose }: Props) => {
   const genderRef = useRef<HTMLSelectElement>(null);
   const tncRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    let base64Image: string | null = null;
+    if (imageRef.current?.files?.[0]) {
+      base64Image = await fileToBase64(imageRef.current.files[0]);
+    }
 
     const data = {
       name: nameRef.current?.value || '',
@@ -35,7 +44,7 @@ const UncontrolledForm = ({ onClose }: Props) => {
       gender: genderRef.current?.value || '',
       acceptedTnC: !!tncRef.current?.checked,
       country: countryRef.current?.value || '',
-      image: null,
+      image: base64Image,
     };
 
     try {
@@ -55,26 +64,39 @@ const UncontrolledForm = ({ onClose }: Props) => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Uncontrolled Form</h2>
+
       <label>
         Name:
         <input ref={nameRef} type="text" />
       </label>
+
       <label>
         Age:
         <input ref={ageRef} type="number" />
       </label>
+
       <label>
         Email:
         <input ref={emailRef} type="email" />
       </label>
+
       <label>
         Password:
-        <input ref={passwordRef} type="password" />
+        <input
+          ref={passwordRef}
+          type="password"
+          onChange={(e) =>
+            setPasswordStrength(getPasswordStrength(e.target.value))
+          }
+        />
       </label>
+      <div>Password strength: {passwordStrength}/4</div>
+
       <label>
         Confirm Password:
         <input ref={confirmPasswordRef} type="password" />
       </label>
+
       <label>
         Gender:
         <select ref={genderRef}>
@@ -83,12 +105,19 @@ const UncontrolledForm = ({ onClose }: Props) => {
           <option value="female">Female</option>
         </select>
       </label>
+
       <label>
         Country:
         <input ref={countryRef} type="text" />
       </label>
+
       <label>
         <input ref={tncRef} type="checkbox" /> Accept Terms & Conditions
+      </label>
+
+      <label>
+        Picture:
+        <input ref={imageRef} type="file" accept="image/*" />
       </label>
 
       <button type="submit">Submit</button>

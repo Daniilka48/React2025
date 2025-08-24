@@ -31,18 +31,24 @@ export const formSchema = yup.object({
     .required('You must accept the Terms and Conditions')
     .oneOf([true], 'You must accept the Terms and Conditions'),
   country: yup.string().required('Country is required'),
-  image: yup
-    .mixed<File>()
+  picture: yup
+    .string()
     .required('Image is required')
-    .test('fileSize', 'File too large', (value) => {
-      const file =
-        value instanceof File ? value : (value?.[0] as File | undefined);
-      return !!file && file.size <= 2 * 1024 * 1024;
+    .test(
+      'is-base64',
+      'Invalid image',
+      (value) => !!value && value.startsWith('data:image/')
+    )
+    .test('file-size', 'File too large (max 2MB)', (value) => {
+      if (!value) return false;
+      const sizeInBytes =
+        (value.length * 3) / 4 -
+        (value.endsWith('==') ? 2 : value.endsWith('=') ? 1 : 0);
+      return sizeInBytes <= 2 * 1024 * 1024;
     })
-    .test('fileFormat', 'Unsupported Format', (value) => {
-      const file =
-        value instanceof File ? value : (value?.[0] as File | undefined);
-      return !!file && ['image/jpeg', 'image/png'].includes(file.type);
+    .test('file-format', 'Unsupported format', (value) => {
+      if (!value) return false;
+      return /^data:image\/(jpeg|png)/.test(value);
     }),
 });
 
