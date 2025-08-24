@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { ValidationError } from 'yup';
 import { getPasswordStrength } from '../../utils/passwordStrength';
 import { fileToBase64 } from '../../utils/fileToBase64';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store/store';
 
 interface Props {
   onClose: () => void;
@@ -16,6 +18,9 @@ interface Props {
 const UncontrolledForm = ({ onClose }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -108,7 +113,16 @@ const UncontrolledForm = ({ onClose }: Props) => {
 
       <label>
         Country:
-        <input ref={countryRef} type="text" />
+        <input
+          ref={countryRef}
+          list="country-list"
+          placeholder="Select a country"
+        />
+        <datalist id="country-list">
+          {countries.map((country) => (
+            <option key={country} value={country} />
+          ))}
+        </datalist>
       </label>
 
       <label>

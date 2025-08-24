@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { getPasswordStrength } from '../../utils/passwordStrength';
 import { fileToBase64 } from '../../utils/fileToBase64';
 import type { FormData as ReduxFormData } from '../../store/formsSlice';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store/store';
 
 interface Props {
   onClose: () => void;
@@ -17,6 +19,9 @@ interface Props {
 const HookFormForm = ({ onClose }: Props) => {
   const dispatch = useDispatch();
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   const {
     register,
@@ -87,7 +92,12 @@ const HookFormForm = ({ onClose }: Props) => {
 
       <label>
         Country:
-        <input {...register('country')} />
+        <input list="country-list" {...register('country')} />
+        <datalist id="country-list">
+          {countries.map((country) => (
+            <option key={country} value={country} />
+          ))}
+        </datalist>
         <p>{errors.country?.message}</p>
       </label>
 
