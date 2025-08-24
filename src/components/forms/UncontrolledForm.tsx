@@ -1,8 +1,11 @@
 import { useRef } from 'react';
 import type { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import { addUncontrolledForm } from '../../store/formsSlice';
 import type { AppDispatch } from '../../store/store';
+import { formSchema } from '../../validation/formSchema';
+import { ValidationError } from 'yup';
 
 interface Props {
   onClose: () => void;
@@ -20,23 +23,33 @@ const UncontrolledForm = ({ onClose }: Props) => {
   const tncRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    dispatch(
-      addUncontrolledForm({
-        id: Date.now().toString(),
-        name: nameRef.current?.value || '',
-        age: Number(ageRef.current?.value) || 0,
-        email: emailRef.current?.value || '',
-        password: passwordRef.current?.value || '',
-        gender: genderRef.current?.value || '',
-        acceptedTnC: tncRef.current?.checked || false,
-        country: countryRef.current?.value || '',
-      })
-    );
+    const data = {
+      name: nameRef.current?.value || '',
+      age: Number(ageRef.current?.value || 0),
+      email: emailRef.current?.value || '',
+      password: passwordRef.current?.value || '',
+      confirmPassword: confirmPasswordRef.current?.value || '',
+      gender: genderRef.current?.value || '',
+      acceptedTnC: !!tncRef.current?.checked,
+      country: countryRef.current?.value || '',
+      image: null,
+    };
 
-    onClose();
+    try {
+      await formSchema.validate(data, { abortEarly: false });
+      dispatch(addUncontrolledForm({ id: uuidv4(), ...data }));
+      onClose();
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        alert(err.errors.join('\n'));
+      } else {
+        console.error(err);
+        alert('Unexpected error');
+      }
+    }
   };
 
   return (
