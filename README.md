@@ -29,6 +29,61 @@ The following actions were tested:
 - switching the year,
 - adding/removing additional columns.
 
+### 🔹 Before optimization
+
+**Parameters:**
+
+### Baseline profiling
+- Commit duration: ~15ms
+- Render duration (AppInner): 12.5ms
+- Interactions: search bar
+- Almost every action caused a re-render of all country cards
+
+- Commit duration: ~4679ms
+- Render duration (AppInner): 2964ms
+- Passive effects: 1715ms
+- Main bottleneck: DataTableImpl and AppInner components
+- Flamegraph shows heavy re-renders of DataTableImpl
+- Ranked Chart: `AppInner` and `DataTable` generated the highest load
+
+**results and screenshots**
+(docs/profiling/baseline)
+
+### 🔹 After optimization 
+(`React.memo`, `useMemo`, `useCallback`)
+
+Optimizations:
+- `React.memo` added for `YearSelector`, `SearchBar`, `SortControl` and other "pure" components.
+- `useMemo` used for calculations (e.g. YearSelector).
+- `useCallback` used for handlers (`setYear`, `setRegion`, etc.).
+
+**Parameters:**
+
+### Optimized profiling
+- Commit duration: ~12ms - ~15ms(Baseline)
+- Render duration (AppInner): 9.7ms
+- Interactions: search bar
+- The number of unnecessary re-renders has been reduced
+
+- Commit duration: ~4066ms (decreased but still the highest)
+- Render duration (AppInner): 2469ms
+- Passive effects: 1596ms
+- Main bottleneck: DataTableImpl and AppInner components
+- Flamegraph shows heavy re-renders of DataTableImpl
+- Ranked chart confirms DataTableImpl is the slowest component
+
+**results and screenshots**
+(docs/profiling/optimized)
+
+## Conclusion
+
+After optimization, the application performance has improved significantly:
+- commit duration has decreased,
+- only changed components are re-rendered,
+- UI has become more responsive when sorting and searching.
+
+---
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
