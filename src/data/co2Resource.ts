@@ -33,19 +33,20 @@ function createResource<T>(promise: Promise<T>): Resource<T> {
 }
 
 async function fetchAndNormalize(): Promise<Country[]> {
-  const res = await fetch('/data/co2-data.json', { cache: 'force-cache' });
+  const res = await fetch('/data/co2-data.json', {
+    cache: 'force-cache',
+  });
   const raw: RawCO2Data = await res.json();
 
-  const countries: Country[] = Object.entries(raw).map(([key, years]) => {
+  const countries: Country[] = Object.entries(raw).map(([key, countryObj]) => {
+    const years: YearData[] = countryObj.data ?? [];
+
     const byYear: Record<number, YearData> = {};
-    let iso: string | undefined;
-    let region: string | undefined;
+    const iso: string | undefined = countryObj.iso_code;
+    const region: string | undefined = countryObj.region;
 
     for (const y of years) {
       byYear[y.year] = y;
-      if (!iso && typeof y.iso_code === 'string') iso = y.iso_code;
-      if (!region && typeof (y as YearData).region === 'string')
-        region = (y as YearData).region;
     }
     const latestYear = years.reduce(
       (acc, y) => (y.year > acc ? y.year : acc),
@@ -54,7 +55,7 @@ async function fetchAndNormalize(): Promise<Country[]> {
 
     return {
       key,
-      name: key,
+      name: countryObj.country ?? key,
       iso_code: iso,
       region,
       years: years.sort((a, b) => a.year - b.year),

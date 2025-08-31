@@ -11,7 +11,15 @@ export type YearData = {
   [key: string]: number | string | undefined;
 };
 
-export type RawCO2Data = Record<string, YearData[]>;
+export type RawCO2Data = Record<
+  string,
+  {
+    country: string;
+    iso_code?: string;
+    region?: string;
+    data: YearData[];
+  }
+>;
 
 export type Country = {
   key: string;

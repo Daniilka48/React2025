@@ -1,4 +1,33 @@
-# React + TypeScript + Vite
+# CO₂ Emissions Explorer
+
+A React + TypeScript + Vite app for analyzing CO₂ emissions by country.
+
+Functionality:
+- select a year (or the latest available),
+- filter by region,
+- search for a country,
+- sort (by name or population),
+- add/remove additional columns.
+
+---
+
+## Development Setup
+
+This project was created from the [React + TypeScript + Vite] template.
+
+To run: npm run dev
+
+---
+
+## Performance Profiling
+
+**React Dev Tools Profiler** was used to measure performance.
+
+The following actions were tested:
+- sorting the list of countries,
+- searching for a country,
+- switching the year,
+- adding/removing additional columns.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
