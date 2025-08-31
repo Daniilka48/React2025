@@ -1,0 +1,84 @@
+.column-button {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.column-button:hover {
+  background: #f5f5f5;
+}
+
+.column-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.column-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  width: 480px;
+  max-width: 90vw;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.column-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.column-required {
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.column-options {
+  max-height: 16rem;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.column-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.column-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.column-cancel {
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.column-apply {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.column-apply:hover {
+  background: #f5f5f5;
+}
