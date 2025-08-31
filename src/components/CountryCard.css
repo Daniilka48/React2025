@@ -1,0 +1,51 @@
+.country-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  background: white;
+  margin-bottom: 16px;
+}
+
+.country-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.country-card-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.country-card-header .iso {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.country-card-highlight {
+  border-radius: 8px;
+  background-color: #f9fafb;
+  padding: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.country-card-highlight .info {
+  display: flex;
+  gap: 16px;
+  font-size: 0.875rem;
+}
+
+.country-card-table {
+  margin-top: 12px;
+}
+
+.flash {
+  animation: flash-bg 0.7s ease;
+}
+
+@keyframes flash-bg {
+  0%   { background-color: #fef08a; }
+  100% { background-color: #f9fafb; }
+}
